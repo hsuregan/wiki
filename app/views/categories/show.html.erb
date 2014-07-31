@@ -1,0 +1,7 @@
+<h1>This is the index view for SHOWING Categories </h1>
+<div>
+<h1><%= @categories.name %></h1>
+<% @categories.articles.order('created_at ASC').each do |article| %>
+<h3><%=link_to article.title, article%></h3>
+<% end %>
+</div>

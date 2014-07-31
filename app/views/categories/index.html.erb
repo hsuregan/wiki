@@ -1,0 +1,13 @@
+<h1>This is the index view for Categories </h1>
+<% @categories.each do |x| %>
+
+<!-- How do I pull from the categories all the articles? --!>
+
+<div>
+	<h3><em><%= link_to x.name, x %></em></h3>
+	<% x.articles.order('title ASC').each do |article| %>
+	<h6 style="color: blue"><%= article.title %></h6>
+	<% end %>
+</div>
+
+<% end %>
