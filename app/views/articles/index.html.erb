@@ -1,1 +1,11 @@
 <h1>This is the index view for Articles </h1>
+<% @articles.each do |x| %>
+<div>
+	<h3><%= link_to x.title, x %></h3>
+		<p>Published on <%= x.created_at.strftime('%b %d, %Y') %> </p>
+	<p>Filed under: <% x.categories.each do |category| %> <%= category.name%><%end%></p>
+	<p><%= truncate(x.content, length: 200) %></p>
+
+	
+</div>
+<% end %>
