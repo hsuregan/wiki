@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-	before_filter :authorize, only: [:new, :edit, :update]
+	before_filter :authorize, only: [:new, :edit, :update, :destroy]
 
 	
 	def index
@@ -16,6 +16,7 @@ class ArticlesController < ApplicationController
 
 	def create
   		@article = Article.new(article_params)
+  		@article.user_id = User.find(session["user_id"]).id
   		if @article.save
     		redirect_to @article, notice: 'Your article has been published!'
   		else
@@ -23,11 +24,14 @@ class ArticlesController < ApplicationController
  		end
 	end
     
-    def destroy
+   def destroy
         @article = Article.find(params[:id])   
-       	@article.delete
-        
-        redirect_to action: "index"
+        if (@article.user_id == User.find(session["user_id"]).id)
+       		@article.delete
+       		redirect_to action: "index"
+       	else
+			redirect_to @article, notice: "you have no right! you did not write!"
+       	end
     end
     
     def edit
@@ -35,7 +39,7 @@ class ArticlesController < ApplicationController
 
 	private
   	def article_params
-    	params.require(:article).permit(:title, :content, :category_ids => [])
+    	params.require(:article).permit(:title, :content,  :user_id => 1, :category_ids => [])
   	end
   	
   	

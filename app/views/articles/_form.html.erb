@@ -1,20 +1,29 @@
-<%= form_for @article, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @article do |f| %>
   <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
+    <%= f.label :title %>
     <div class="controls">
-      <%= f.text_field :title, :class => 'text_field' %>
+      <%= f.text_field :title %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :content, :class => 'control-label' %>
+    <%= f.label :content %>
     <div class="controls">
-      <%= f.text_field :content, :class => 'text_field' %>
+      <%= f.text_area :content, rows: "20", cols: "100" %>
     </div>
   </div>
 
+  <div class='category-control'>
+    <%= f.label 'File under at least one category' %>
+    <% Category.all.order(name: :asc).each do |category| %>
+      <div>
+        <%= check_box_tag "article[category_ids][]", category.id %>
+        <%= category.name %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                articles_path, :class => 'btn' %>
+    <%= f.submit nil %>
+    <%= link_to 'Cancel', articles_path %>
   </div>
 <% end %>
