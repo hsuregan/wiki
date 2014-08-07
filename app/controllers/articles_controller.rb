@@ -1,9 +1,18 @@
 class ArticlesController < ApplicationController
 	before_filter :authorize, only: [:new, :edit, :update, :destroy]
 	
+	
+	
 	def index
-		@articles = Article.order(updated_at: :desc).limit(25)
+
+		if params[:search]
+			@articles = Article.search(params[:search]).order("created_at DESC")
+		else
+			@articles = Article.order(updated_at: :desc).limit(25)
+		end
+			
 	end
+	
 	
 	def show
 		@article = Article.find(params[:id])
@@ -24,7 +33,13 @@ class ArticlesController < ApplicationController
 	end
 
 	def edit
-		return RedirectToAction("Index", model);
+		@article = Article.find(params[:id])
+		if @article.user_id != @current_user.id
+			redirect_to articles_path, :notice => "Nope"
+		end
+	
+		
+		#return RedirectToAction("Index", model);
 
 		#@article = Article.find(params[:id])
 		

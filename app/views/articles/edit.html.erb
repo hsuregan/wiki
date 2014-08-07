@@ -1,4 +1,2 @@
 <h1><% @article = Article.find(params[:id]) %></h1> #why do I have to do this?
-<% if @article.user_id == current_user.id %>
 	<%= render :partial => 'form' %>
-<% end %>

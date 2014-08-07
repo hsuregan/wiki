@@ -1,6 +1,8 @@
 <h1>Welcome to Wikiful. Here are some recent articles</h1>
 <ol>
 	<% @recent_articles.each do |article|%>
+	
+	
 	<li>
 		<%= link_to article.title, article %>
 		<p>Date published: <%=article.created_at.strftime('%d %b %Y') %></p>
