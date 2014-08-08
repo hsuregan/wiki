@@ -35,7 +35,7 @@ class ArticlesController < ApplicationController
 	def edit
 		@article = Article.find(params[:id])
 		if @article.user_id != @current_user.id
-			redirect_to articles_path, :notice => "Nope"
+			redirect_to @article, notice: "nope"
 		end
 	
 		
@@ -69,8 +69,6 @@ class ArticlesController < ApplicationController
        	end
     end
     
-    def edit
-    end
 
 	private
   	def article_params
